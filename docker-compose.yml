@@ -1,0 +1,33 @@
+version: '3.1'
+
+services:
+  db-dev:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "DW"
+    ports:
+      - 5429:5432
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+
+  db-prod:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "DW"
+    ports:
+      - 5430:5432
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data
+
+volumes:
+  postgres_data_dev:
+    driver: local
+
+  postgres_data_prod:
+    driver: local
