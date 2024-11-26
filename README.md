@@ -18,8 +18,11 @@ Este repositório contém o projeto **Live Xperium Hop**, que integra pipelines 
   - Criação de dashboards e relatórios interativos de vendas.
 
 ### Fontes de Dados
-- **Planilhas Excel**: Contêm dados de vendas organizados em diferentes formatos.
-  - Campos esperados: `Data da Venda`, `Produto`, `Cliente`, `Quantidade Vendida`, `Valor Unitário` e `Custo`.
+- **Planilhas Excel**:
+- Metas.xlsx: Contém dados relacionados a metas de vendas por vendedor e suas métricas.
+- Produtos.xlsx: Contém informações detalhadas dos produtos, como nome, grupo, custo e etc.
+- Vendas.xlsx: Dados sobre vendas realizadas, com campos esperados como Data da Venda, nf, cod produto, - Quantidade Vendida, Valor Unitário e etc.
+- Vendedores.xlsx: Informações sobre vendedores, incluindo  nome e equipe de trabalho e url da imagem do vendendor.
 
 ---
 
@@ -86,19 +89,63 @@ Certifique-se de que os seguintes softwares estão instalados na sua máquina:
 git clone https://github.com/seu_usuario/seu_repositorio.git
 cd LIVE_XPERIUM_HOP
 ```
-
 ### 2. Configure o PostgreSQL
-1. Instale o PostgreSQL em sua máquina seguindo as instruções disponíveis [aqui](https://www.postgresql.org/download/).
-2. Após a instalação, crie um banco de dados para o projeto:
-```sql
-CREATE DATABASE DW;
-```
-3. Configure as tabelas e conexões executando os scripts fornecidos no arquivo `dw_vendas`.
+
+1. **Instale o PostgreSQL**  
+   - Baixe e instale o PostgreSQL em sua máquina seguindo as instruções disponíveis no site oficial: [PostgreSQL](https://www.postgresql.org/download/).
+
+2. **Crie o banco de dados para o projeto**  
+   - Após a instalação, acesse o terminal ou a interface gráfica do PostgreSQL (como o pgAdmin ou DBver) e crie um banco de dados para o projeto executando o comando SQL abaixo:  
+   ```sql
+   CREATE DATABASE DW;
+   ```
+
+3. **Configure as tabelas e conexões**  
+   - Execute os scripts SQL fornecidos no arquivo `dw_vendas` para criar as tabelas e configurar o ambiente de dados.  
+   - Utilize o **DBver** (ferramenta usada na aula) para conectar o PostgreSQL ao ambiente local e executar os scripts.  
+     - Certifique-se de configurar a conexão no DBver com as seguintes informações:  
+       - **Host**: `localhost`  
+       - **Port**: 5430 (porta utilizada na aula).  
+         - **Nota**: Se você instalou o PostgreSQL diretamente na sua máquina, provavelmente a porta padrão será 5432. Ajuste de acordo com sua instalação.  
+       - **Database**: `DW`  
+       - **Username**: Nome de usuário configurado durante a instalação (exemplo: `postgres`).  
+       - **Password**: Senha definida durante a instalação.  
+
+4. **Teste a conexão**  
+   - No **DBver**, teste a conexão com o banco de dados para garantir que tudo esteja funcionando corretamente.  
+   - Certifique-se de que as tabelas foram criadas conforme o script SQL executado.
 
 ### 3. Configure o Apache Hop
-1. Baixe e instale o Apache Hop em sua máquina pelo site oficial: [Apache Hop](https://hop.apache.org/).
-2. Abra o Apache Hop e importe os pipelines e workflows localizados nos diretórios `pipelines` e `workflow`.
-3. Configure as variáveis de ambiente utilizando o arquivo `project-config.json`.
+
+1. **Baixe e instale o Apache Hop**  
+   - Acesse o site oficial do Apache Hop: [Apache Hop](https://hop.apache.org/).  
+   - Faça o download da versão compatível com o sistema operacional de sua máquina.  
+   - Extraia o conteúdo do arquivo e siga as instruções de instalação específicas para seu sistema operacional.
+
+2. **Abra o Apache Hop e importe os pipelines e workflows**  
+   - No Apache Hop, acesse o menu principal e selecione **File > Import from File**.  
+   - Navegue até os diretórios `pipelines` e `workflow` do seu projeto e importe os arquivos correspondentes.  
+   - Certifique-se de que os pipelines e workflows sejam carregados corretamente no ambiente do Apache Hop.
+
+3. **Configure as variáveis de ambiente**  
+   - Localize o arquivo `project-config.json` no diretório do projeto.  
+   - No Apache Hop, acesse **Project > Manage Environment Variables** e configure as variáveis de acordo com o arquivo.  
+   - Verifique se as variáveis estão definidas corretamente, como paths para os arquivos de entrada e parâmetros de execução do pipeline.
+
+4. **Crie as variáveis de conexão para o banco PostgreSQL**  
+   - No Apache Hop, acesse **Manage > Connections** e clique em **New** para adicionar uma conexão ao banco de dados PostgreSQL.  
+   - Preencha os campos com as informações da conexão:  
+     - **Name**: Escolha um nome para identificar a conexão.  
+     - **Database type**: PostgreSQL.  
+     - **Host**: Endereço do servidor (use `localhost` para conexões locais).  
+     - **Port**: Utilize a porta 5430, conforme especificado na aula.  
+       - **Nota**: Caso você tenha instalado o PostgreSQL em sua máquina, a porta padrão é 5432. Ajuste o valor de acordo com sua instalação.  
+     - **Database name**: DW.  
+     - **Username**: Nome de usuário para autenticação.  
+     - **Password**: Senha correspondente.  
+   - Clique em **Test Connection** para validar a configuração.  
+   - Salve a conexão.
+
 
 ---
 
@@ -114,9 +161,17 @@ CREATE DATABASE DW;
 
 O arquivo `dashboard_vendas.pbix` contém o dashboard de vendas. Para utilizá-lo:
 
-1. Abra o arquivo no Power BI Desktop.
-2. Atualize as conexões de dados para o ambiente configurado.
-3. Publique o relatório no Power BI Service, se necessário.
+1. **Abra o arquivo no Power BI Desktop**  
+   - Certifique-se de que o Power BI Desktop esteja instalado e atualizado em sua máquina.
+
+2. **Atualize as conexões de dados para o ambiente configurado**  
+   - Configure as credenciais e os parâmetros para conectar ao banco de dados PostgreSQL utilizando as informações do ambiente criado.
+
+3. **Publique o relatório no Power BI Service (se necessário)**  
+   - Caso deseje compartilhar o dashboard, publique-o no Power BI Service e configure o agendamento de atualização, se necessário.
+
+> **Nota**: Em alguns casos, pode ser necessário instalar o conector do PostgreSQL para que o Power BI consiga se conectar ao banco de dados. Consulte a [documentação oficial do Power BI](https://learn.microsoft.com/en-us/power-query/connectors/postgresql) para mais informações sobre como instalar e configurar o conector.
+
 
 ---
 
