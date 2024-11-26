@@ -45,6 +45,8 @@ Este repositório contém o projeto **Live Xperium Hop**, que integra pipelines 
   - `dproduto`: Detalhes sobre os produtos.
   - `dcliente`: Informações sobre os clientes.
   - `dCalendario`: Estruturação temporal para análise por períodos.
+  
+  **Nota**: A dimensão **`dCalendario`** foi criada utilizando fórmulas DAX diretamente no arquivo do Power BI, fornecendo uma estrutura temporal completa para análise por períodos específicos.
 - **Fatos**:
   - `fvendas`: Registro consolidado das vendas com métricas calculadas.
   - `fmetas`: Registro consolidado das metas com métricas calculadas.
@@ -122,17 +124,11 @@ cd LIVE_XPERIUM_HOP
    - Faça o download da versão compatível com o sistema operacional de sua máquina.  
    - Extraia o conteúdo do arquivo e siga as instruções de instalação específicas para seu sistema operacional.
 
-2. **Abra o Apache Hop e importe os pipelines e workflows**  
-   - No Apache Hop, acesse o menu principal e selecione **File > Import from File**.  
-   - Navegue até os diretórios `pipelines` e `workflow` do seu projeto e importe os arquivos correspondentes.  
-   - Certifique-se de que os pipelines e workflows sejam carregados corretamente no ambiente do Apache Hop.
-
-3. **Configure as variáveis de ambiente**  
-   - Localize o arquivo `project-config.json` no diretório do projeto.  
-   - No Apache Hop, acesse **Project > Manage Environment Variables** e configure as variáveis de acordo com o arquivo.  
-   - Verifique se as variáveis estão definidas corretamente, como paths para os arquivos de entrada e parâmetros de execução do pipeline.
-
-4. **Crie as variáveis de conexão para o banco PostgreSQL**  
+2. **Abra o Apache Hop e crie um projeto**  
+   - No Apache Hop, acesse o menu principal e selecione **File > New > Project**, conforme especificado na aula.  
+   - Dê um nome ao projeto e, na configuração do diretório, selecione a pasta que você clonou do repositório Git como o diretório principal do projeto.
+s
+3. **Crie as variáveis de conexão para o banco PostgreSQL**  
    - No Apache Hop, acesse **Manage > Connections** e clique em **New** para adicionar uma conexão ao banco de dados PostgreSQL.  
    - Preencha os campos com as informações da conexão:  
      - **Name**: Escolha um nome para identificar a conexão.  
